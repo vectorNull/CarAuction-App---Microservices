@@ -40,7 +40,7 @@ public class AuctionsController : ControllerBase
 
         if (auction == null)
         {
-            return NoContent();
+            return NotFound();
         }
 
         var auctionDto = _mapper.Map<AuctionDto>(auction);
@@ -65,5 +65,56 @@ public class AuctionsController : ControllerBase
         var auctionDto = _mapper.Map<AuctionDto>(auction);
 
         return CreatedAtAction(nameof(GetAuctionById), new {auction.Id}, auctionDto);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateAuction(Guid id, UpdateAuctionDto updateAuctionDto)
+    {
+        var auctionToUpdate = await _repository.GetAuctionByIdAsync(id);
+
+        if (auctionToUpdate is null)
+        {
+            return NotFound();
+        }
+
+        // TODO: Check seller == username
+
+        auctionToUpdate.Item.Make = updateAuctionDto.Make ?? auctionToUpdate.Item.Make;
+        auctionToUpdate.Item.Model = updateAuctionDto.Model ?? auctionToUpdate.Item.Model;
+        auctionToUpdate.Item.Color = updateAuctionDto.Color ?? auctionToUpdate.Item.Color;
+        auctionToUpdate.Item.Mileage = updateAuctionDto.Mileage ?? auctionToUpdate.Item.Mileage;
+        auctionToUpdate.Item.Year = updateAuctionDto.Year ?? auctionToUpdate.Item.Year;
+
+        var result = await _repository.SaveChangesAsync();
+
+        if (!result)
+        {
+            return BadRequest("Problem saving changes.");
+        }
+
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteAuction(Guid id)
+    {
+        var auctionToDelete = await _repository.GetAuctionByIdAsync(id);
+
+        if (auctionToDelete is null)
+        {
+            return NotFound();
+        }
+
+        // TODO: Check seller == username
+
+        _repository.DeleteAsync(auctionToDelete);
+        var result = await _repository.SaveChangesAsync();
+
+        if (!result)
+        {
+            return BadRequest("Could not update DB.");
+        }
+
+        return Ok();
     }
 }

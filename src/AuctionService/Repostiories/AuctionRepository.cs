@@ -46,4 +46,9 @@ public class AuctionRepository : IAuctionRepository
         return await _context.SaveChangesAsync() > 0;
     }
 
+    public void DeleteAsync(Auction auction)
+    {
+        _context.Auctions.Remove(auction);
+    }
+
 }
