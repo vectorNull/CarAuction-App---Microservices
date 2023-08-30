@@ -1,4 +1,5 @@
 using AuctionService.Data;
+using AuctionService.DTOs;
 using AuctionService.Entities;
 using AuctionService.interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ public class AuctionRepository : IAuctionRepository
     {
         _context = context;
     }
+
 
     public async Task<IEnumerable<Auction>> GetAllAuctionsAsync()
     {
@@ -33,4 +35,15 @@ public class AuctionRepository : IAuctionRepository
         
         return auction;
     }
+   
+    public void AddAuctionAsync(Auction auction)
+    {
+        _context.Auctions.Add(auction);
+    }
+
+    public async Task<bool> SaveChangesAsync()
+    {
+        return await _context.SaveChangesAsync() > 0;
+    }
+
 }
