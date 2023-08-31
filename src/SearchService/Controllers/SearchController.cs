@@ -1,11 +1,8 @@
-using System.Runtime.InteropServices;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Entities;
 using SearchService.Constants;
 using SearchService.Models;
 using SearchService.RequestHelpers;
-using ZstdSharp.Unsafe;
 
 namespace SearchService.Controllers;
 

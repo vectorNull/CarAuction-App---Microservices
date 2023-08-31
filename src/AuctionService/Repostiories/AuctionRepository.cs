@@ -1,5 +1,4 @@
 using AuctionService.Data;
-using AuctionService.DTOs;
 using AuctionService.Entities;
 using AuctionService.interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -16,14 +15,16 @@ public class AuctionRepository : IAuctionRepository
     }
 
 
-    public async Task<IEnumerable<Auction>> GetAllAuctionsAsync()
+    public IQueryable<Auction> GetAllAuctionsAsync(string date)
     {
-        var auctions = await _context.Auctions
-                .Include(i => i.Item)
-                .OrderBy(i => i.Item.Make)
-            .ToListAsync();
+        var query = _context.Auctions.OrderBy(i => i.Item.Make).AsQueryable();
+
+        if (!string.IsNullOrEmpty(date))
+        {
+            query = query.Where(x => x.UpdatedAt.CompareTo(DateTime.Parse(date).ToUniversalTime()) > 0);
+        }
         
-        return auctions;
+        return query;
     }
 
     public async Task<Auction> GetAuctionByIdAsync(Guid id)

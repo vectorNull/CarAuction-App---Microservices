@@ -2,7 +2,9 @@ using AuctionService.DTOs;
 using AuctionService.Entities;
 using AuctionService.interfaces;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuctionService.Controllers;
 
@@ -20,17 +22,16 @@ public class AuctionsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions()
+    public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions(string date)
     {
-        var auctions = await _repository.GetAllAuctionsAsync();
+        var query = _repository.GetAllAuctionsAsync(date);
 
-        if (auctions == null)
+        if (query == null)
         {
             return NoContent();
         }
 
-        var auctionDtos = _mapper.Map<IEnumerable<AuctionDto>>(auctions);
-        return Ok(auctionDtos);
+        return await query.ProjectTo<AuctionDto>(_mapper.ConfigurationProvider).ToListAsync();
     }
 
     [HttpGet("{id}")]
