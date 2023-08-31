@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Entities;
+using SearchService.Constants;
 using SearchService.Models;
 using SearchService.RequestHelpers;
 using ZstdSharp.Unsafe;
@@ -24,15 +25,15 @@ public class SearchController : ControllerBase
 
         query = searchParams.OrderBy switch
         {
-            "make" => query.Sort(x => x.Ascending(a => a.Make)),
-            "new" => query.Sort(x => x.Descending(a => a.CreatedAt)),
+            SearchParamConstants.MAKE => query.Sort(x => x.Ascending(a => a.Make)),
+            SearchParamConstants.NEW => query.Sort(x => x.Descending(a => a.CreatedAt)),
             _ => query.Sort(x => x.Ascending(a => a.AuctionEnd))
         };
 
         query = searchParams.FilterBy switch
         {
-            "finished" => query.Match(x => x.AuctionEnd < DateTime.UtcNow),
-            "endingSoon" => query.Match(x => x.AuctionEnd < DateTime.UtcNow.AddHours(6) 
+            SearchParamConstants.FINISHED => query.Match(x => x.AuctionEnd < DateTime.UtcNow),
+            SearchParamConstants.ENDING_SOON => query.Match(x => x.AuctionEnd < DateTime.UtcNow.AddHours(6) 
                 && x.AuctionEnd > DateTime.UtcNow),
             _ => query.Match(x => x.AuctionEnd > DateTime.UtcNow)
         };
