@@ -11,3 +11,13 @@
 ### RabbitMQ Fanout Pattern
 
 ![rabbitMq](https://github.com/vectorNull/CarAuction-App---Microservices/assets/50179896/e5125992-69b0-4c5b-a643-ad006c13b79f)
+
+## Why Mass Transit?
+
+- Message routing
+- Exception Handling
+- Dependency Injection
+- Open Telemetry (OTEL) for activity tracking
+- Test Harnessing
+
+It also gives us some abrstraction in case we would like to switch to a different transport or service bus in the future, such as Azure Bus Service or Amazon SQS, without much hassle
