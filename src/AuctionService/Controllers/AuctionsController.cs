@@ -3,6 +3,8 @@ using AuctionService.Entities;
 using AuctionService.interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Contracts;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,11 +16,13 @@ public class AuctionsController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly IAuctionRepository _repository;
+    private readonly IPublishEndpoint _publishEndpoint;
 
-    public AuctionsController(IMapper mapper, IAuctionRepository repository)
+    public AuctionsController(IMapper mapper, IAuctionRepository repository, IPublishEndpoint publishEndpoint)
     {
         _mapper = mapper;
         _repository = repository;
+        _publishEndpoint = publishEndpoint;
     }
 
     [HttpGet]
@@ -56,16 +60,20 @@ public class AuctionsController : ControllerBase
         auction.Seller = "test";
 
         _repository.AddAuctionAsync(auction);
+
+        // Publish message
+        var newAuctionDto = _mapper.Map<AuctionDto>(auction);
+        await _publishEndpoint.Publish(_mapper.Map<AuctionCreated>(newAuctionDto));
+        
         var result = await _repository.SaveChangesAsync();
+
 
         if (!result)
         {
             return BadRequest("Could not save changes to DB");
         }
 
-        var auctionDto = _mapper.Map<AuctionDto>(auction);
-
-        return CreatedAtAction(nameof(GetAuctionById), new {auction.Id}, auctionDto);
+        return CreatedAtAction(nameof(GetAuctionById), new {auction.Id}, newAuctionDto);
     }
 
     [HttpPut("{id}")]
@@ -85,6 +93,9 @@ public class AuctionsController : ControllerBase
         auctionToUpdate.Item.Color = updateAuctionDto.Color ?? auctionToUpdate.Item.Color;
         auctionToUpdate.Item.Mileage = updateAuctionDto.Mileage ?? auctionToUpdate.Item.Mileage;
         auctionToUpdate.Item.Year = updateAuctionDto.Year ?? auctionToUpdate.Item.Year;
+
+        // Publish Mmessage
+        await _publishEndpoint.Publish( _mapper.Map<AuctionUpdated>(auctionToUpdate));
 
         var result = await _repository.SaveChangesAsync();
 
@@ -109,6 +120,10 @@ public class AuctionsController : ControllerBase
         // TODO: Check seller == username
 
         _repository.DeleteAsync(auctionToDelete);
+
+        // Publish message
+        await _publishEndpoint.Publish<AuctionDeleted>(new { Id = auctionToDelete.Id.ToString() } );
+        
         var result = await _repository.SaveChangesAsync();
 
         if (!result)
