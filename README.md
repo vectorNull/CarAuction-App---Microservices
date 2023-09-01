@@ -1,4 +1,10 @@
-# CarAuction App---Microservices
+# CarAuction App - Microservices
+
+## Tech Used
+
+- .Net 7
+- Entity Framework Core
+- RabbitMQ with Mass Transit package
 
 ![Microservices - CarAuction](https://github.com/vectorNull/CarAuction-App---Microservices/assets/50179896/1150f59e-eb46-4d24-9eb9-64820dca6203)
 
