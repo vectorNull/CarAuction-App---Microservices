@@ -28,4 +28,6 @@ It also gives us some abrstraction in case we would like to switch to a differen
 - Created IdentityServer project that is a standalone server
 - Uses the OpendID Connect and OAuth 2.0 standards
 
+![OAuth 2 0 Workflow](https://github.com/vectorNull/CarAuction-App---Microservices/assets/50179896/d6c8b877-60f2-40db-bed8-95c478c01f69)
+
 In a production environment, I would probably use something like AWS Cognito.
