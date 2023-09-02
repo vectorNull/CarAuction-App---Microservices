@@ -9,11 +9,11 @@
 
 ![Microservices - CarAuction](https://github.com/vectorNull/CarAuction-App---Microservices/assets/50179896/1150f59e-eb46-4d24-9eb9-64820dca6203)
 
-### RabbitMQ Fanout Pattern
+### ![RabbitMQ](https://www.rabbitmq.com/) Fanout Pattern
 
 ![rabbitMq](https://github.com/vectorNull/CarAuction-App---Microservices/assets/50179896/e5125992-69b0-4c5b-a643-ad006c13b79f)
 
-## Why Mass Transit?
+## Why ![Mass Transit](https://masstransit.io/)?
 
 - Message routing
 - Exception Handling
@@ -23,7 +23,7 @@
 
 It also gives us some abrstraction in case we would like to switch to a different transport or service bus in the future, such as Azure Bus Service or Amazon SQS, without much hassle.
 
-## Identity Server
+## ![Identity Server](https://duendesoftware.com/products/identityserver)
 
 - Created IdentityServer project that is a standalone server
 - Uses the OpendID Connect and OAuth 2.0 standards
