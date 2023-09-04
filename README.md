@@ -30,4 +30,4 @@ It also gives us some abrstraction in case we would like to switch to a differen
 
 ![OAuth 2 0 Workflow](https://github.com/vectorNull/CarAuction-App---Microservices/assets/50179896/d6c8b877-60f2-40db-bed8-95c478c01f69)
 
-In a production environment, I would probably use something like AWS Cognito.
+In a production environment, I would probably use something like AWS Cognito. I am only adding authentication to the auction service which allows users to create a new auction. Anonymous access will be allowed for other services.
