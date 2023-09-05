@@ -19,7 +19,7 @@ builder.Services.AddDbContext<AuctionDbContext>(opt =>
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// Mass Transit using RabbitMQ
+// MASS TRANSIT using RabbitMQ
 builder.Services.AddMassTransit(x => 
 {
     x.AddEntityFrameworkOutbox<AuctionDbContext>(opt => 
@@ -29,7 +29,9 @@ builder.Services.AddMassTransit(x =>
         opt.UseBusOutbox();
     });
 
+    // CONSUMERS - No need to add individual consumers if they are in the same namespace
     x.AddConsumersFromNamespaceContaining<AuctionCreatedFaultsConsumer>();
+
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("auction", false));
 
     x.UsingRabbitMq((context, cfg) => 
