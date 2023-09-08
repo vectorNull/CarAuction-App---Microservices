@@ -2,10 +2,10 @@ using AuctionService.Consumers;
 using AuctionService.Data;
 using AuctionService.interfaces;
 using AuctionService.Repostiories;
-using Contracts;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +60,13 @@ builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+ConfigureServices();
+
+void ConfigureServices()
+{
+    IdentityModelEventSource.ShowPII = true;
+}
 
 app.UseAuthentication(); // must be b4 UseAuthorization or will get a 404
 app.UseAuthorization();
