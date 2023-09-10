@@ -1,18 +1,24 @@
 import './globals.css'
+import Navbar from './nav/Navbar'
 
 export const metadata = {
-  title: 'Car Auction',
-  description: 'A NextJS/ASP.Net Microservices Application',
+	title: 'Car Auction',
+	description: 'A NextJS/ASP.Net Microservices Application',
 }
 
 export default function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode
+	children: React.ReactNode
 }) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  )
+	return (
+		<html lang="en">
+			<body>
+				<Navbar />
+				<main className='container mx-auto px-5 pt-10'>
+					{children}
+				</main>
+			</body>
+		</html>
+	)
 }
