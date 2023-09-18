@@ -63,6 +63,15 @@ To get started with Duende IdentityServer and take control of your identity and 
 
 In a production environment, I would probably use something like AWS Cognito. I am only adding authentication to the auction service which allows users to create a new auction. Anonymous access will be allowed for other services.
 
+# What I did not cover in this project:
+- Refresh tokens
+- Forgot Password functionality
+- Email confirmation
+- Consent
+- 2FA
+
+I may come back and add that. However, my main focus was microservices architecture.
+
 ## ![YARP - Yet Another Reverse Proxy](https://microsoft.github.io/reverse-proxy/index.html)
 
 YARP, short for "Yet Another Reverse Proxy," is a powerful and flexible open-source reverse proxy project developed by Microsoft. YARP is designed to simplify and enhance the management of HTTP and HTTP/2 traffic routing for your applications and services. Whether you're working with microservices, API gateways, or complex web applications, YARP provides a robust solution to efficiently handle incoming requests, distribute traffic, and manage authentication and security.
