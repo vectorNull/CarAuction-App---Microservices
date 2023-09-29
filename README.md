@@ -1,5 +1,7 @@
 # CarAuction App - Microservices
 
+### Huge shoutout to Neil Cummings for an excellent course found ![here](https://www.udemy.com/course/build-a-microservices-app-with-dotnet-and-nextjs-from-scratch)
+
 ## Tech Used
 
 - .Net 7
