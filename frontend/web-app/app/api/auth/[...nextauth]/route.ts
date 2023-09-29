@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
         })
     ],
     callbacks: {
-        async jwt({ token, profile, account }) {
+        async jwt({ token, profile, account, user }) {
             if (profile) {
                 token.username = profile.username
             }
