@@ -9,17 +9,15 @@ export async function getSession() {
 }
 
 export async function getCurrentUser() {
-    
+
     try {
-        const session = await getServerSession();
-        console.log(session);
+        const session = await getSession();
 
         if (!session) return null;
 
         return session.user;
 
-    } catch (error)
-    {
+    } catch (error) {
         return null;
     }
 }
@@ -34,5 +32,5 @@ export async function getTokenWorkaround() {
         )
     } as NextApiRequest;
 
-    return await getToken({req});
+    return await getToken({ req });
 }
