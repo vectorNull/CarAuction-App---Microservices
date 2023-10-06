@@ -27,8 +27,12 @@ export async function getDetailedViewData(id: string): Promise<Auction> {
 
 export async function updateAuction(data: FieldValues, id: string): Promise<Auction> {
 	const res = await fetchWrapper.put(`auctions/${id}`, data);
-	
+
 	// NextJS caches the auction; use revalidatePath or else you will have to refresh page
 	revalidatePath(`/auctions/${id}`);
 	return res;
+}
+
+export async function deleteAuction(id: string) {
+	return await fetchWrapper.del(`auctions/${id}`);
 }
