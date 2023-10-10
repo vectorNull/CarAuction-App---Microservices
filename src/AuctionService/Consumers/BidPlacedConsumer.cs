@@ -16,7 +16,7 @@ namespace AuctionService.Consumers
         {
             Console.WriteLine("--> Consuming BidPlaced");
 
-            var auction = await _dbContext.Auctions.FindAsync(context.Message.AuctionId);
+            var auction = await _dbContext.Auctions.FindAsync(Guid.Parse(context.Message.AuctionId));
 
             if (auction.CurrentHighBid is null 
                 || context.Message.BidStatus.Contains("Accepted") 
